@@ -110,7 +110,7 @@ STATICLIBPATH	Makefile	/^STATICLIBPATH=$(SRCROOT)\/lib$/;"	m
 ServerSocket_	TcpServer.h	/^    int ServerSocket_;$/;"	m	class:libfly::TcpServer
 ServerTask	TcpServer.cpp	/^struct ServerTask$/;"	s	namespace:libfly	file:
 Server_Accept_Func	TcpServer.cpp	/^void * TcpServer::Server_Accept_Func(void *arg)$/;"	f	class:libfly::TcpServer
-Server_ReadWrite_Func	TcpServer.cpp	/^static void * Server_ReadWrite_Func(void *arg)$/;"	f	namespace:libfly
+Server_ReadWrite_Func	TcpServer.cpp	/^void * TcpServer::Server_ReadWrite_Func(void *arg)$/;"	f	class:libfly::TcpServer
 SetAddr	TcpServer.cpp	/^static void SetAddr(const char *pszIP,const unsigned short shPort,struct sockaddr_in &addr)$/;"	f	namespace:libfly
 SetAddr	test.cpp	/^static void SetAddr(const char *pszIP,const unsigned short shPort,struct sockaddr_in &addr)$/;"	f	file:
 SetAddr	test_server.cpp	/^static void SetAddr(const char *pszIP,const unsigned short shPort,struct sockaddr_in &addr)$/;"	f	file:
@@ -123,7 +123,7 @@ StackMemry	routine.cpp	/^StackMemry::StackMemry(int stack_size)$/;"	f	class:libf
 StackMemry	routine.h	/^class StackMemry$/;"	c	namespace:libfly
 Start_	routine.h	/^    char Start_;                      \/\/协程是否运行$/;"	m	class:libfly::Routine
 TRACE	Log.cpp	/^		const int TRACE = 90;$/;"	m	namespace:libfly::LogInfo::LevelType	file:
-TcpServer	TcpServer.cpp	/^TcpServer::TcpServer(unsigned long long processNum, unsigned long long threadNum,$/;"	f	class:libfly::TcpServer
+TcpServer	TcpServer.cpp	/^TcpServer::TcpServer(unsigned long long processNum, unsigned long long routineNum)$/;"	f	class:libfly::TcpServer
 TcpServer	TcpServer.h	/^class TcpServer$/;"	c	namespace:libfly
 Time_heap	Time_heap.cpp	/^Time_heap::Time_heap(int cap)$/;"	f	class:libfly::Time_heap
 Time_heap	Time_heap.h	/^class Time_heap$/;"	c	namespace:libfly
@@ -336,6 +336,8 @@ notify_all	Conditional_variable.cpp	/^void Conditional_variable::notify_all()$/;
 notify_one	Conditional_variable.cpp	/^void Conditional_variable::notify_one()$/;"	f	class:libfly::Conditional_variable
 occupy_	routine.h	/^    Routine* occupy_;$/;"	m	class:libfly::RoutineEnv
 occupy_co_	routine.h	/^    Routine* occupy_co_;     \/\/当前协程指针$/;"	m	class:libfly::StackMemry
+onConnection	test_Tcpserver.cpp	/^void onConnection(void *)$/;"	f
+onMessage	test_Tcpserver.cpp	/^void onMessage(const char* data,$/;"	f
 outputInfo	Log.cpp	/^void Log::outputInfo(int _outputLevel, std::string filePos ,std::string function, int line , std::string strInfo)$/;"	f	class:libfly::Log
 outputLevel_	Log.h	/^    int    outputLevel_;$/;"	m	class:libfly::Log
 param_init_typeof	closure.h	58;"	d

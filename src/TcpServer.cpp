@@ -118,7 +118,7 @@ static int CreateTcpSocket(const unsigned short shPort  = 0 ,const char *pszIP  
 	return fd;
 }
 
-static void * Server_ReadWrite_Func(void *arg)
+void * TcpServer::Server_ReadWrite_Func(void *arg)
 {
     ServerTask *tsk = (ServerTask*) arg;
     char buf[1024*10];
@@ -231,10 +231,8 @@ void * TcpServer::Server_Accept_Func(void *arg)
 }
 
 
-TcpServer::TcpServer(unsigned long long processNum, unsigned long long threadNum,
-             unsigned long long routineNum)
+TcpServer::TcpServer(unsigned long long processNum, unsigned long long routineNum)
  :  processNum_(processNum),
-    threadNum_(threadNum),
     routineNum_(routineNum)
 {
     
@@ -254,35 +252,47 @@ void TcpServer::start()
     
     SetNonBlock(g_listen_fd); 
      
-
-
-
-    //begin thread routine and process 
-	for(int i=0;i<threadNum_;i++)
+    
+    for(int k=0;k<processNum_;k++)
 	{
-		ServerTask * tsk = (ServerTask*)calloc( 1,sizeof(ServerTask) );
-		tsk->fd = -1;
-        tsk->tcpServer_ = this;
-        RoutineArr_.push_back(new Routine(get_curr_thread_env(),NULL,Server_ReadWrite_Func,tsk) );	
-        tsk->routine = RoutineArr_[i];
-	}
 
-    for(int i = 0;i < threadNum_ ;i++)
-    {
-        RoutineArr_[i]->resume();
-    }
+		pid_t pid = fork();
+		if( pid > 0 )
+		{
+			continue;
+		}
+		else if( pid < 0 )
+		{
+			break;
+		}
+
+
+        //begin thread routine and process 
+	    for(int i=0;i<routineNum_;i++)
+	    {
+		    ServerTask * tsk = (ServerTask*)calloc( 1,sizeof(ServerTask) );
+		    tsk->fd = -1;
+            tsk->tcpServer_ = this;
+            RoutineArr_.push_back(new Routine(get_curr_thread_env(),NULL,Server_ReadWrite_Func,tsk) );	
+            tsk->routine = RoutineArr_[i];
+	    }
+
+        for(int i = 0;i < routineNum_ ;i++)
+        {
+            RoutineArr_[i]->resume();
+        }
     
     
-	ServerTask * accepter_tsk = (ServerTask*)calloc( 1,sizeof(ServerTask) );
-    accepter_tsk->tcpServer_=this;
-    Routine*  accepter = (new Routine(get_curr_thread_env(),NULL,Server_Accept_Func,
+	    ServerTask * accepter_tsk = (ServerTask*)calloc( 1,sizeof(ServerTask) );
+        accepter_tsk->tcpServer_=this;
+        Routine*  accepter = (new Routine(get_curr_thread_env(),NULL,Server_Accept_Func,
                           (void*)(accepter_tsk) ) );	
-    accepter->resume();
+        accepter->resume();
 
-    EventLoop eventloop(get_curr_thread_env()->time_heap_,NULL,NULL);
-    eventloop.loop(); 
+        EventLoop eventloop(get_curr_thread_env()->time_heap_,NULL,NULL);
+        eventloop.loop(); 
+    }
 }
-
 
 }
 

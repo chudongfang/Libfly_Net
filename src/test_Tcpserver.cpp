@@ -5,16 +5,35 @@
 	> Created Time: 2018年02月25日 星期日 15时43分25秒
  ************************************************************************/
 
-#include"./TcpServer.cpp"
-#include"./TcpServer.h"
+#include"TcpServer.cpp"
+#include"TcpServer.h"
 
 using namespace libfly;
 
 
+
+void onConnection(void *)
+{
+    //a new connection comming!
+    std::cout<<"A new connection!"<<std::endl;
+}
+
+
+void onMessage(const char* data,
+               ssize_t len)
+{
+    //a new message comming!
+    std::cout<<"A new message!"<<std::endl;
+}
+
+
 int main()
 {
-    TcpServer Test(100,100,100);
-    Test.start();
+
+    TcpServer server(2,2);
+    server.setConnectionCallback(onConnection);
+    server.setMessageCallback(onMessage);
+    server.start();
     return 0;
 }
 

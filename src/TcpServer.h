@@ -17,8 +17,7 @@ namespace libfly
 class TcpServer
 {
 public:
-    TcpServer(unsigned long long processNum, unsigned long long threadNum,
-             unsigned long long routineNum);
+    TcpServer(unsigned long long processNum, unsigned long long routineNum);
     ~TcpServer(){};
    
     void start();
@@ -35,7 +34,7 @@ public:
 
 private:   
     static void * Server_Accept_Func(void *);
-    static void * readwrite_routine(void *arg); 
+    static void * Server_ReadWrite_Func(void *arg); 
 
 
 //FIXME
