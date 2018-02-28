@@ -18,6 +18,7 @@
 
 ```c++
 //create a server 
+//it create 2 process and every process create 2 routines
 TcpServer server(2,2);
 
 //set ConnetionCallback
