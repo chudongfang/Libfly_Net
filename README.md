@@ -30,6 +30,8 @@ server.start();
 ```
 
 
+![Travis](https://img.shields.io/travis/USER/REPO.svg)
+
 
 
 
