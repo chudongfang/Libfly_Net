@@ -9,6 +9,9 @@
     it adds epoll module to libfly.
     
 
+![TeamCity CodeBetter](https://img.shields.io/teamcity/codebetter/bt428.svg)
+
+
 
 ## How to use/使用方法
 
@@ -30,7 +33,6 @@ server.start();
 ```
 
 
-![Travis](https://img.shields.io/travis/USER/REPO.svg)
 
 
 
